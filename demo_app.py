@@ -532,11 +532,16 @@ def main():
                 feature_vector_scaled = scaler.transform(feature_vector)
                 
                 # Get prediction and probability
+# Get prediction and probability
                 prediction = model.predict(feature_vector_scaled)[0]
                 proba = model.predict_proba(feature_vector_scaled)[0]
                 
+                # --- INSERT THIS HERE ---
+                st.write("DEBUG CLASSES:", label_encoder.classes_)
+                # ------------------------
+
                 # Get faller probability
-                faller_idx = list(label_encoder.classes_).index('Faller')
+                faller_idx = list(label_encoder.classes_).index('Faller') # <--- This is the crashing line
                 faller_probability = proba[faller_idx]
                 
                 # Get risk stratification
