@@ -1,0 +1,13 @@
+{
+  "model_type": "XGBoost",
+  "num_features": 44,
+  "test_balanced_accuracy": 0.5739682539682539,
+  "test_accuracy": 0.8,
+  "cv_mean": 0.44142857142857145,
+  "cv_std": 0.024283120517159536,
+  "classes": [
+    "Low",
+    "Medium",
+    "High"
+  ]
+}
