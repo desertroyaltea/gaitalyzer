@@ -539,10 +539,25 @@ def main():
                 # --- INSERT THIS HERE ---
                 st.write("DEBUG CLASSES:", label_encoder.classes_)
                 # ------------------------
-
-                # Get faller probability
-                faller_idx = list(label_encoder.classes_).index('Faller') # <--- This is the crashing line
+# --- SMART FIX FOR CLASS NAME ---
+                # Try to find the correct class name automatically
+                try:
+                    # List of possible names your model might use
+                    possible_names = ['Faller', 'faller', 'Fall', '1', 1, 'Yes', 'High Risk', 'Abnormal']
+                    
+                    # Find the first one that actually exists in your encoder
+                    target_name = next(name for name in possible_names if name in label_encoder.classes_)
+                    
+                    # Get the index
+                    faller_idx = list(label_encoder.classes_).index(target_name)
+                    
+                except StopIteration:
+                    # If NONE of the names match, default to index 1 (Standard for binary classification)
+                    # Index 0 is usually "Normal", Index 1 is "Abnormal/Faller"
+                    faller_idx = 1
+                
                 faller_probability = proba[faller_idx]
+                # --------------------------------
                 
                 # Get risk stratification
                 risk_info = get_risk_stratification(prediction, faller_probability)
